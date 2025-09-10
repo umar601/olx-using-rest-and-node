@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OLX Listings</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/home.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-content">
+      <a href="/" class="logo"><i class="fas fa-store"></i> OLX</a>
+      
+      <div class="search-bar">
+        <input type="text" placeholder="Find Cars, Mobile Phones and more...">
+        <button><i class="fas fa-search"></i></button>
+      </div>
+
+      <button class="sell-button"><i class="fas fa-plus-circle"></i> SELL</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <h1 class="page-title"><i class="fas fa-list"></i> All Listings</h1>
+    
+    <!-- Listings Grid -->
+    <div class="listings-grid">
+      <% for(list of allLists) { %>
+      <div class="listing-card" onclick="window.location.href='/lists/view/<%=list._id%>'">
+        <img src="<%= list.images[0] %>" alt="Cover photo" class="listing-image">
+        <div class="listing-details">
+          <div class="listing-price">Rs <%= list.price %></div>
+          <div class="listing-title"><%= list.title %></div>
+          <div class="listing-location"><i class="fas fa-map-marker-alt"></i> <%= list.city %></div>
+        </div>
+        <div class="listing-actions">
+          <a href="/lists/edit/<%= list._id %>" class="edit-button"><i class="fas fa-edit"></i> Edit</a>
+        </div>
+      </div>
+      <% } %>
+    </div>
+    
+    <!-- Add New Button -->
+    <div class="add-new-container">
+      <a href="/lists/new" class="add-new-button"><i class="fas fa-plus-circle"></i> Add new listing</a>
+    </div>
+  </div>
+
+  <script>
+    // Card click (without relying on inline onclick)
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll(".listing-card").forEach(card => {
+        card.addEventListener("click", () => {
+          const url = card.getAttribute("onclick").match(/'(.*?)'/)[1];
+          window.location.href = url;
+        });
+      });
+
+      document.querySelector(".sell-button").addEventListener("click", () => {
+        window.location.href = "/lists/new";
+      });
+    });
+  </script>
+</body>
+</html>

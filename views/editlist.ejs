@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Listing - OLX</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/edit.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="/" class="logo"><i class="fas fa-store"></i>OLX</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1 class="page-title">Edit Your Listing</h1>
+        
+        <div class="success-message">
+            <i class="fas fa-check-circle"></i>
+            <span>You are editing an existing listing. Changes will be visible to buyers after updating.</span>
+        </div>
+        
+        <div class="form-container">
+            <form action="http://localhost:8080/lists/<%= editlist._id %>?_method=patch" method="post">
+                <h2 class="section-header"><i class="fas fa-tag"></i>Item Information</h2>
+                
+                <div class="form-group">
+                    <label for="title"><i class="fas fa-heading"></i>Title</label>
+                    <input type="text" name="title" id="title" class="form-control" value="<%= editlist.title %>" required placeholder="Enter item title">
+                </div>
+                
+                <div class="form-group">
+                    <label for="description"><i class="fas fa-align-left"></i>Description</label>
+                    <textarea name="description" id="description" class="form-control" required placeholder="Describe your item in detail"><%= editlist.description %></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="category"><i class="fas fa-layer-group"></i>Category</label>
+                        <select name="category" id="category" class="form-control" required>
+                            <option value="Electronics" <%= editlist.category === 'Electronics' ? 'selected' : '' %>>Electronics</option>
+                            <option value="Vehicles" <%= editlist.category === 'Vehicles' ? 'selected' : '' %>>Vehicles</option>
+                            <option value="Property" <%= editlist.category === 'Property' ? 'selected' : '' %>>Property</option>
+                            <option value="Home & Garden" <%= editlist.category === 'Home & Garden' ? 'selected' : '' %>>Home & Garden</option>
+                            <option value="Services" <%= editlist.category === 'Services' ? 'selected' : '' %>>Services</option>
+                            <option value="Other" <%= editlist.category === 'Other' ? 'selected' : '' %>>Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="price"><i class="fas fa-tag"></i>Price (RS)</label>
+                        <input type="text" name="price" id="price" class="form-control" value="<%= editlist.price %>" required placeholder="0.00">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="condition"><i class="fas fa-certificate"></i>Condition</label>
+                        <select name="condition" id="condition" class="form-control" required>
+                            <option value="New" <%= editlist.condition === 'New' ? 'selected' : '' %>>New</option>
+                            <option value="Used - Like New" <%= editlist.condition === 'Used - Like New' ? 'selected' : '' %>>Used - Like New</option>
+                            <option value="Used - Good" <%= editlist.condition === 'Used - Good' ? 'selected' : '' %>>Used - Good</option>
+                            <option value="Used - Fair" <%= editlist.condition === 'Used - Fair' ? 'selected' : '' %>>Used - Fair</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <h2 class="section-header"><i class="fas fa-map-marker-alt"></i>Location Details</h2>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city"><i class="fas fa-city"></i>City</label>
+                        <input type="text" name="city" id="city" class="form-control" value="<%= editlist.location.city %>" required placeholder="Enter your city">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address"><i class="fas fa-map-pin"></i>Address</label>
+                        <input type="text" name="address" id="address" class="form-control" value="<%= editlist.location.address %>" required placeholder="Enter your address">
+                    </div>
+                </div>
+                
+                <h2 class="section-header"><i class="fas fa-user"></i>Seller Information</h2>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name"><i class="fas fa-user-circle"></i>Your Name</label>
+                        <input type="text" name="name" id="name" class="form-control" value="<%= editlist.seller.name%>" required placeholder="Enter your name">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email"><i class="fas fa-envelope"></i>Email</label>
+                        <input type="email" name="email" id="email" class="form-control" value="<%= editlist.seller.email %>" required placeholder="Enter your email">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone"><i class="fas fa-phone"></i>Phone</label>
+                        <input type="tel" name="phone" id="phone" class="form-control" value="<%= editlist.seller.phone %>" required placeholder="Enter your phone number">
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <a href="javascript:history.back()" class="btn btn-cancel">
+                        <i class="fas fa-arrow-left"></i> Cancel
+                    </a>
+                    <button type="submit" class="btn btn-update">
+                        <i class="fas fa-save"></i> Update Listing
+                    </button>
+                </div>
+            </form>
+            
+            <form action="http://localhost:8080/lists/<%= editlist._id %>?_method=delete" method="post">
+                <div class="button-group" style="justify-content: flex-end; margin-top: 15px; border-top: none;">
+                    <button type="submit" class="btn btn-delete">
+                        <i class="fas fa-trash"></i> Delete Listing
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="footer">
+            <p>© 2023 OLX - All rights reserved</p>
+        </div>
+    </div>
+</body>
+</html>

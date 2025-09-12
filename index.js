@@ -6,6 +6,12 @@ const router = require("./routes/listroutes");
 
 const middlewares = require("./middlewares/middleware");
 
+const userRoute = require("./routes/userroutes");
+
+const restictToLoginUsers = require("./middlewares/authentication");
+
+const cookie = require("cookie-parser");
+
 
 const port = 8080;
 
@@ -25,7 +31,12 @@ getConnection(url)
 
 middlewares(app);
 
-app.use("/lists",router);
+app.use(cookie());
+
+
+app.use("/user",userRoute);
+
+app.use("/lists",restictToLoginUsers,router);
 
 app.listen(port,()=>{
     

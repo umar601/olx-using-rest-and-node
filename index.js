@@ -8,7 +8,7 @@ const middlewares = require("./middlewares/middleware");
 
 const userRoute = require("./routes/userroutes");
 
-const restictToLoginUsers = require("./middlewares/authentication");
+const { restictToLoginUsers, authorizeUser }= require("./middlewares/authentication");
 
 const cookie = require("cookie-parser");
 
@@ -36,7 +36,15 @@ app.use(cookie());
 
 app.use("/user",userRoute);
 
-app.use("/lists",restictToLoginUsers,router);
+app.use("/lists",restictToLoginUsers,authorizeUser(["normal","admin"]),router);
+
+
+app.use("/admin",restictToLoginUsers,authorizeUser(["admin"]),(req,res)=>{
+
+    res.send("admin side");
+});
+
+
 
 app.listen(port,()=>{
     

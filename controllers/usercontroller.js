@@ -56,11 +56,15 @@ async function handlerToLogin(req,res) {
         res.redirect("/user/login");
     }
 
-    let sessionId = uuidv4();
+    // let sessionId = uuidv4();
 
-    setSessionId(validUser._id,sessionId);
+    // setSessionId(validUser._id,sessionId);
     
-    res.cookie("uuid",sessionId);
+    // res.cookie("uuid",sessionId);
+
+    const token = setSessionId(validUser);
+
+    res.cookie("token",token);
 
     res.redirect("/lists");
 
@@ -68,5 +72,13 @@ async function handlerToLogin(req,res) {
 }
 
 
+async function handlerToLogOut(req,res) {
 
-module.exports = {handlerToSignup,handlerToLogin,handlerSignup,handlerLogin};
+    res.clearCookie("token");
+    res.redirect("/user/login");
+    
+}
+
+
+
+module.exports = {handlerToSignup,handlerToLogin,handlerSignup,handlerLogin,handlerToLogOut};
